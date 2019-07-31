@@ -1,6 +1,5 @@
 __precompile__()
 module CodecLz4
-using Compat
 using TranscodingStreams: TranscodingStream, Memory, Error
 using TranscodingStreams
 export LZ4Compressor, LZ4CompressorStream,
@@ -21,9 +20,7 @@ struct LZ4Exception <: Exception
     msg::AbstractString
 end
 
-function Base.showerror(io::IO, ex::LZ4Exception, bt; backtrace=false)
-    printstyled(io, "$(ex.src): $(ex.msg)", color=Base.error_color())
-end
+Base.showerror(io::IO, ex::LZ4Exception) = print(io, "$(ex.src): $(ex.msg)")
 
 include("lz4frame.jl")
 include("stream_compression.jl")
